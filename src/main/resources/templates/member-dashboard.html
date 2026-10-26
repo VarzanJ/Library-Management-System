@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Member Dashboard</title></head>
+<body>
+    <h2>Member Dashboard</h2>
+    <p>Welcome, <span th:text="${session.loggedUser.name}"></span></p>
+    <a href="/member/books">Search Books</a> |
+    <a href="/member/my-books">My Books</a> |
+    <a href="/logout">Logout</a>
+</body>
+</html>

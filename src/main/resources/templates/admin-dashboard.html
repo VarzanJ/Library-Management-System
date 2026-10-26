@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Admin Dashboard</title></head>
+<body>
+    <h2>Admin / Librarian Dashboard</h2>
+    <p>Welcome, <span th:text="${session.loggedUser.name}"></span></p>
+    <a href="/admin/books">Manage Books</a> | 
+    <a href="/admin/members">Manage Members</a> |
+    <a href="/admin/borrow-records">Borrow Records</a> |
+     <a href="/logout">Logout</a>
+</body>
+</html>
