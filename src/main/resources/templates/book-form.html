@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Book Form</title></head>
+<body>
+    <h2>Book Details</h2>
+
+    <form method="post" action="/admin/books/save" th:object="${book}">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Title</label><br>
+        <input type="text" th:field="*{title}" required><br><br>
+
+        <label>Author</label><br>
+        <input type="text" th:field="*{author}" required><br><br>
+
+        <label>ISBN</label><br>
+        <input type="text" th:field="*{isbn}"><br><br>
+
+        <label>Category</label><br>
+        <input type="text" th:field="*{category}"><br><br>
+
+        <label>Publisher</label><br>
+        <input type="text" th:field="*{publisher}"><br><br>
+
+        <label>
+            <input type="checkbox" th:field="*{available}"> Available
+        </label><br><br>
+
+        <button type="submit">Save</button>
+        <a href="/admin/books">Cancel</a>
+    </form>
+</body>
+</html>
