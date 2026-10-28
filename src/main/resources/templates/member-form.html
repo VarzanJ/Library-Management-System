@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Member Form</title></head>
+<body>
+    <h2>Member Details</h2>
+
+    <p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+    <form method="post" action="/admin/members/save" th:object="${member}">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Full Name</label><br>
+        <input type="text" th:field="*{name}" required><br><br>
+
+        <label>Username</label><br>
+        <input type="text" th:field="*{username}" required><br><br>
+
+        <label>Password</label><br>
+        <input type="text" th:field="*{password}" required><br><br>
+
+        <label>Role</label><br>
+        <select th:field="*{role}">
+            <option value="MEMBER">MEMBER</option>
+            <option value="LIBRARIAN">LIBRARIAN</option>
+            <option value="ADMIN">ADMIN</option>
+        </select><br><br>
+
+        <button type="submit">Save</button>
+        <a href="/admin/members">Cancel</a>
+    </form>
+</body>
+</html>

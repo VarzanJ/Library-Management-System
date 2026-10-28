@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Manage Members</title></head>
+<body>
+    <h2>Manage Members</h2>
+    <a href="/admin/dashboard">Dashboard</a> |
+    <a href="/admin/members/add">Register New Member</a> |
+    <a href="/logout">Logout</a>
+    <br><br>
+
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Actions</th>
+        </tr>
+        <tr th:each="m : ${members}">
+            <td th:text="${m.id}"></td>
+            <td th:text="${m.name}"></td>
+            <td th:text="${m.username}"></td>
+            <td th:text="${m.role}"></td>
+            <td>
+                <a th:href="@{/admin/members/edit/{id}(id=${m.id})}">Edit</a> |
+                <a th:href="@{/admin/members/delete/{id}(id=${m.id})}"
+                   onclick="return confirm('Delete this member?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
