@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fines | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/books">Books</a>
+    <a href="/admin/members">Members</a>
+    <a href="/admin/borrow-records">Borrow records</a>
+    <a href="/admin/fines">Fines</a>
+    <a href="/admin/overdue-books">Overdue books</a>
+</nav>
+<main class="container">
+    <div class="page-head"><h2>Fine management</h2></div>
+    <p class="summary-line"><strong th:text="${#lists.size(unpaidFines)}"></strong> unpaid fine(s).</p>
+    <table>
+        <thead>
+            <tr><th>Fine ID</th><th>Book</th><th>Member</th><th>Due date</th><th>Return date</th><th>Overdue days</th><th>Amount (LKR)</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="fine : ${fines}">
+                <td th:text="${fine.id}"></td>
+              <td th:text="${fine.loan.book.title}"></td>
+<td th:text="${fine.loan.member.name}"></td>
+<td th:text="${fine.loan.dueDate}"></td>
+<td th:text="${fine.loan.returnDate}"></td>
+                <td th:text="${fine.overdueDays}"></td>
+                <td th:text="${#numbers.formatDecimal(fine.fineAmount, 1, 'COMMA', 2, 'POINT')}"></td>
+                <td><span class="badge" th:classappend="${fine.paid} ? 'badge-success' : 'badge-danger'"
+                          th:text="${fine.paid} ? 'Paid' : 'Unpaid'"></span></td>
+                <td class="actions">
+                    <form th:if="${!fine.paid}" method="post" th:action="@{/admin/fines/pay/{id}(id=${fine.id})}"
+                          data-confirm="Mark this fine as paid?">
+                        <button class="btn-sm" type="submit">Mark as paid</button>
+                    </form>
+                    <span th:if="${fine.paid}" class="muted">Completed</span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(fines)}"><td class="empty" colspan="9">No fine records found.</td></tr>
+        </tbody>
+    </table>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
+</body>
+</html>

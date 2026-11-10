@@ -1,28 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Manage Members</title></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manage members | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
 <body>
-    <h2>Manage Members</h2>
-    <a href="/admin/dashboard">Dashboard</a> |
-    <a href="/admin/members/add">Register New Member</a> |
-    <a href="/logout">Logout</a>
-    <br><br>
-
-    <table border="1" cellpadding="6">
-        <tr>
-            <th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Actions</th>
-        </tr>
-        <tr th:each="m : ${members}">
-            <td th:text="${m.id}"></td>
-            <td th:text="${m.name}"></td>
-            <td th:text="${m.username}"></td>
-            <td th:text="${m.role}"></td>
-            <td>
-                <a th:href="@{/admin/members/edit/{id}(id=${m.id})}">Edit</a> |
-                <a th:href="@{/admin/members/delete/{id}(id=${m.id})}"
-                   onclick="return confirm('Delete this member?')">Delete</a>
-            </td>
-        </tr>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/books">Books</a>
+    <a href="/admin/members">Members</a>
+    <a href="/admin/borrow-records">Borrow records</a>
+    <a href="/admin/fines">Fines</a>
+    <a href="/admin/overdue-books">Overdue books</a>
+</nav>
+<main class="container">
+    <div class="page-head">
+        <h2>Manage members</h2>
+        <a class="btn" href="/admin/members/add">Register new member</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="m : ${members}">
+                <td th:text="${m.id}"></td>
+                <td th:text="${m.name}"></td>
+                <td th:text="${m.username}"></td>
+                <td th:text="${m.role}"></td>
+                <td class="actions">
+                    <a th:href="@{/admin/members/edit/{id}(id=${m.id})}">Edit</a>
+                    <a class="link-danger" th:href="@{/admin/members/delete/{id}(id=${m.id})}" data-confirm="Delete this member?">Delete</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(members)}"><td class="empty" colspan="5">No members found.</td></tr>
+        </tbody>
     </table>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
 </body>
 </html>

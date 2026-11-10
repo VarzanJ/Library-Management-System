@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Borrowing summary | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/member/dashboard">Dashboard</a>
+    <a href="/member/books">Search books</a>
+    <a href="/member/my-books">My books</a>
+</nav>
+<main class="container">
+    <div class="card form-card">
+        <h2>Borrowing summary</h2>
+        <div class="success">The book has been borrowed successfully.</div>
+
+        <h3>Book</h3>
+        <dl class="details">
+            <dt>Title</dt><dd th:text="${record.book.title}"></dd>
+            <dt>Author</dt><dd th:text="${record.book.author}"></dd>
+            <dt>ISBN</dt><dd th:text="${record.book.isbn}"></dd>
+        </dl>
+
+        <h3>Member</h3>
+        <dl class="details">
+            <dt>Name</dt><dd th:text="${record.member.name}"></dd>
+            <dt>Username</dt><dd th:text="${record.member.username}"></dd>
+        </dl>
+
+        <h3>Dates</h3>
+        <dl class="details">
+            <dt>Issue date</dt><dd th:text="${record.issueDate}"></dd>
+            <dt>Due date</dt><dd th:text="${record.dueDate}"></dd>
+        </dl>
+
+        <div class="form-actions">
+            <a class="btn" href="/member/my-books">My books</a>
+            <a href="/member/books">Borrow another book</a>
+        </div>
+    </div>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
+</body>
+</html>

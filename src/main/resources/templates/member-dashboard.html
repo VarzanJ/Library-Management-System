@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Member Dashboard</title></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
 <body>
-    <h2>Member Dashboard</h2>
-    <p>Welcome, <span th:text="${session.loggedUser.name}"></span></p>
-    <a href="/member/books">Search Books</a> |
-    <a href="/member/my-books">My Books</a> |
-    <a href="/logout">Logout</a>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/member/dashboard">Dashboard</a>
+    <a href="/member/books">Search books</a>
+    <a href="/member/my-books">My books</a>
+</nav>
+<main class="container">
+    <h2>Dashboard</h2>
+    <p class="muted">Welcome, <span th:text="${session.loggedUser.name}"></span>.</p>
+    <div class="dashboard-grid">
+        <a class="dashboard-card" href="/member/books"><h3>Search books</h3><p>Find a book and borrow it.</p></a>
+        <a class="dashboard-card" href="/member/my-books"><h3>My books</h3><p>See current loans and your borrowing history.</p></a>
+    </div>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
 </body>
 </html>

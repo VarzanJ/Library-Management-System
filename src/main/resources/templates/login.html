@@ -1,22 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>SEUSL Library - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
 </head>
 <body>
-    <h2>SEUSL Library Management System</h2>
+    <div class="login-split">
+        <aside class="login-hero">
+            <div>
+                <h1>SEUSL Library Management System</h1>
+                <p>South Eastern University of Sri Lanka</p>
+            </div>
+        </aside>
+        <main class="login-panel">
+            <div class="login-container">
+                <img class="login-logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+                <h2>Sign in</h2>
+                <p class="muted">Enter your username and password to continue.</p>
+                <div class="error" th:if="${error}" th:text="${error}"></div>
+                <form method="post" action="/login">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autofocus>
 
-    <p th:if="${error}" th:text="${error}" style="color:red"></p>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
 
-    <form method="post" action="/login">
-        <label>Username</label><br>
-        <input type="text" name="username" required><br><br>
-
-        <label>Password</label><br>
-        <input type="password" name="password" required><br><br>
-
-        <button type="submit">Login</button>
-    </form>
+                    <label class="inline"><input type="checkbox" data-toggle-password="#password"> Show password</label>
+                    <button type="submit">Sign in</button>
+                </form>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

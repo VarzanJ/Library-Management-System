@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Overdue books | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/books">Books</a>
+    <a href="/admin/members">Members</a>
+    <a href="/admin/borrow-records">Borrow records</a>
+    <a href="/admin/fines">Fines</a>
+    <a href="/admin/overdue-books">Overdue books</a>
+</nav>
+<main class="container">
+    <div class="page-head"><h2>Overdue books</h2></div>
+    <p class="summary-line">
+        <strong th:text="${totalOverdue}"></strong> overdue book(s) as of <span th:text="${today}"></span>.
+    </p>
+    <table>
+        <thead>
+            <tr><th>Record</th><th>Book</th><th>Member</th><th>Issue date</th><th>Due date</th><th>Days overdue</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${overdueRecords}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.book.title}"></td>
+                <td th:text="${r.member.name}"></td>
+                <td th:text="${r.issueDate}"></td>
+                <td th:text="${r.dueDate}"></td>
+                <td><span class="badge badge-danger" th:text="${today.toEpochDay() - r.dueDate.toEpochDay()}"></span></td>
+                <td class="actions">
+                    <a th:href="@{/admin/return/{id}(id=${r.id})}" data-confirm="Mark this book as returned?">Mark returned</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(overdueRecords)}"><td class="empty" colspan="7">There are no overdue books.</td></tr>
+        </tbody>
+    </table>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
+</body>
+</html>

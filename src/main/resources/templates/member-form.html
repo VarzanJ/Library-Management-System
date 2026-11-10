@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Member Form</title></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Member details | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
 <body>
-    <h2>Member Details</h2>
-
-    <p th:if="${error}" th:text="${error}" style="color:red"></p>
-
-    <form method="post" action="/admin/members/save" th:object="${member}">
-        <input type="hidden" th:field="*{id}">
-
-        <label>Full Name</label><br>
-        <input type="text" th:field="*{name}" required><br><br>
-
-        <label>Username</label><br>
-        <input type="text" th:field="*{username}" required><br><br>
-
-        <label>Password</label><br>
-        <input type="text" th:field="*{password}" required><br><br>
-
-        <label>Role</label><br>
-        <select th:field="*{role}">
-            <option value="MEMBER">MEMBER</option>
-            <option value="LIBRARIAN">LIBRARIAN</option>
-            <option value="ADMIN">ADMIN</option>
-        </select><br><br>
-
-        <button type="submit">Save</button>
-        <a href="/admin/members">Cancel</a>
-    </form>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/books">Books</a>
+    <a href="/admin/members">Members</a>
+    <a href="/admin/borrow-records">Borrow records</a>
+    <a href="/admin/fines">Fines</a>
+    <a href="/admin/overdue-books">Overdue books</a>
+</nav>
+<main class="container">
+    <div class="card form-card">
+        <h2>Member details</h2>
+        <div class="error" th:if="${error}" th:text="${error}"></div>
+        <form method="post" action="/admin/members/save" th:object="${member}">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-grid">
+                <div class="full"><label for="name">Full name</label><input type="text" th:field="*{name}" required></div>
+                <div><label for="username">Username</label><input type="text" th:field="*{username}" required></div>
+                <div><label for="password">Password</label><input type="text" th:field="*{password}" required></div>
+                <div class="full">
+                    <label for="role">Role</label>
+                    <select th:field="*{role}">
+                        <option value="MEMBER">MEMBER</option>
+                        <option value="LIBRARIAN">LIBRARIAN</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Save member</button>
+                <a href="/admin/members">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
 </body>
 </html>

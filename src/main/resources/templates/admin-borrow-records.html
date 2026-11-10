@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Borrow records | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/books">Books</a>
+    <a href="/admin/members">Members</a>
+    <a href="/admin/borrow-records">Borrow records</a>
+    <a href="/admin/fines">Fines</a>
+    <a href="/admin/overdue-books">Overdue books</a>
+</nav>
+<main class="container">
+    <div class="page-head"><h2>Borrow and return records</h2></div>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Book</th><th>Member</th><th>Issue date</th><th>Due date</th><th>Return date</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${records}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.book.title}"></td>
+                <td th:text="${r.member.name}"></td>
+                <td th:text="${r.issueDate}"></td>
+                <td th:text="${r.dueDate}"></td>
+                <td th:text="${r.returnDate} ?: '-'"></td>
+                <td><span class="badge" th:classappend="${r.returnDate == null} ? 'badge-warning' : 'badge-success'"
+                          th:text="${r.returnDate == null} ? 'On loan' : 'Returned'"></span></td>
+                <td class="actions">
+                    <a th:if="${r.returnDate == null}" th:href="@{/admin/return/{id}(id=${r.id})}"
+                       data-confirm="Mark this book as returned?">Mark returned</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(records)}"><td class="empty" colspan="8">No borrow records yet.</td></tr>
+        </tbody>
+    </table>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
+</body>
+</html>

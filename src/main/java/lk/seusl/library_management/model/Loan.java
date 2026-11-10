@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "borrow_records")
-public class BorrowRecord {
+public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,9 @@ public class BorrowRecord {
 
     private LocalDate dueDate;
 
-    // null until the book is returned
     private LocalDate returnDate;
 
-    public BorrowRecord() {
+    public Loan() {
     }
 
     public Long getId() { return id; }
@@ -54,6 +53,3 @@ public class BorrowRecord {
     public LocalDate getReturnDate() { return returnDate; }
     public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
 }
-
-
-

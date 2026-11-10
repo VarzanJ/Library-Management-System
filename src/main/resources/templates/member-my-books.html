@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My books | SEUSL Library</title>
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <img class="logo" th:src="@{/images/logo.png}" alt="SEUSL logo" onerror="this.style.display='none'">
+            <h1>SEUSL Library Management System</h1>
+        </div>
+        <div class="user-info">
+            <span th:text="${session.loggedUser.name}"></span>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <a href="/member/dashboard">Dashboard</a>
+    <a href="/member/books">Search books</a>
+    <a href="/member/my-books">My books</a>
+</nav>
+<main class="container">
+    <div class="page-head"><h2>My books</h2></div>
+
+    <h3>Currently borrowed</h3>
+    <table>
+        <thead><tr><th>Title</th><th>Author</th><th>Issue date</th><th>Due date</th></tr></thead>
+        <tbody>
+            <tr th:each="r : ${current}">
+                <td th:text="${r.book.title}"></td>
+                <td th:text="${r.book.author}"></td>
+                <td th:text="${r.issueDate}"></td>
+                <td th:text="${r.dueDate}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(current)}"><td class="empty" colspan="4">You have no borrowed books.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Borrowing history</h3>
+    <table>
+        <thead><tr><th>Title</th><th>Issue date</th><th>Due date</th><th>Return date</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr th:each="r : ${history}">
+                <td th:text="${r.book.title}"></td>
+                <td th:text="${r.issueDate}"></td>
+                <td th:text="${r.dueDate}"></td>
+                <td th:text="${r.returnDate} ?: '-'"></td>
+                <td><span class="badge" th:classappend="${r.returnDate == null} ? 'badge-warning' : 'badge-success'"
+                          th:text="${r.returnDate == null} ? 'On loan' : 'Returned'"></span></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(history)}"><td class="empty" colspan="5">No borrowing history yet.</td></tr>
+        </tbody>
+    </table>
+</main>
+<footer>South Eastern University of Sri Lanka &ndash; Library Management System</footer>
+</body>
+</html>
